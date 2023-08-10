@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import React from 'react';
-// import { toast } from 'react-toastify';
+import css from './Searchbar.module.css';
+import { ReactComponent as MyIcon } from '../icons/search.svg';
 
 class SearchBar extends Component {
   state = {
@@ -13,9 +14,9 @@ class SearchBar extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    // if (this.state.query.trim() === '') {
-    //   return toast.info('Please enter the search data.');
-    // }
+    if (this.state.query.trim() === '') {
+      return alert('Please enter the search data.');
+    }
     this.props.onSubmit(this.state.query);
     this.setState({ query: '' });
   };
@@ -23,14 +24,15 @@ class SearchBar extends Component {
   render() {
     const { query } = this.state;
     return (
-      <header className="searchbar">
-        <form className="form" onSubmit={this.handleSubmit}>
-          <button type="submit" className="button">
-            <span className="button-label">Search</span>
+      <header className={css.searchbar}>
+        <form className={css.SearchForm} onSubmit={this.handleSubmit}>
+          <button type="submit" className={css.SearchFormButton}>
+            <MyIcon className={css.icon} />
+            <span className={css.SearchFormButtonLabel}>Search</span>
           </button>
 
           <input
-            className="input"
+            className={css.SearchFormInput}
             type="text"
             autoComplete="off"
             autoFocus
