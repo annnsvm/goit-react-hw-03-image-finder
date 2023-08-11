@@ -18,7 +18,7 @@ const ImageGallery = ({ images, onModalOpen }) => {
   );
 };
 
-ImageGallery.prototype = {
+ImageGallery.propTypes = {
   onModalOpen: PropTypes.func.isRequired,
   images: PropTypes.arrayOf(
     PropTypes.shape({
