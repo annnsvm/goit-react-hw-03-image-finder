@@ -7,9 +7,9 @@ const ImageGallery = ({ images, onModalOpen }) => {
   return (
     <ul className={css.ImageGallery}>
       {images.length > 0 &&
-        images.map((image, index) => (
+        images.map(image => (
           <ImageGalleryItem
-            key={`${image.id}-${index}`} // Combine 'id' and 'index'
+            key={image.id} // Combine 'id' and 'index'
             item={image}
             onModalOpen={onModalOpen}
           ></ImageGalleryItem>

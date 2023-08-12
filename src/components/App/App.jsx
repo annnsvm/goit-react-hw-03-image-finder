@@ -23,7 +23,9 @@ export class App extends Component {
     const { query, page } = this.state;
 
     if (prevState.query !== query || prevState.page !== page) {
-      this.fetchImg();
+      this.setState({ images: [], page: 1 }, () => {
+        this.fetchImg();
+      });
     }
   }
 
@@ -62,14 +64,12 @@ export class App extends Component {
       images: [],
       page: 1,
     });
-    this.fetchImg(query, 1);
   };
 
   onLoadMore = () => {
     this.setState(prevState => ({
       page: prevState.page + 1,
     }));
-    this.fetchImg(this.state.query, this.state.page + 1);
   };
 
   render() {
