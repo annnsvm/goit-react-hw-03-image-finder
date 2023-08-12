@@ -3,6 +3,8 @@ import React from 'react';
 import css from './Searchbar.module.css';
 import { ReactComponent as MyIcon } from '../icons/search.svg';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class SearchBar extends Component {
   state = {
@@ -16,7 +18,9 @@ class SearchBar extends Component {
   handleSubmit = event => {
     event.preventDefault();
     if (this.state.query.trim() === '') {
-      return alert('Please enter the search data.');
+      return toast.error('Please enter the search data.', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
     this.props.onSubmit(this.state.query);
     this.setState({ query: '' });

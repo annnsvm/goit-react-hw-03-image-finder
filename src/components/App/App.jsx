@@ -7,6 +7,8 @@ import Modal from '../Modal/Modal';
 import Loader from '../Loader/Loader';
 import Button from 'components/Button/Button';
 import css from './App.module.css';
+import { toast, ToastContainer, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export class App extends Component {
   state = {
@@ -27,22 +29,29 @@ export class App extends Component {
     const { query, page } = this.state;
 
     if (prevState.query !== query || prevState.page !== page) {
-      this.setState({ images: [], page: 1 }, () => {
-        this.fetchImg();
-      });
+      this.fetchImg(query, page);
     }
   }
 
   fetchImg = async (query, page) => {
+    if (!query) {
+      return;
+    }
     try {
       this.setState({ loading: true });
       const { hits, totalHits } = await fetchData(query, page);
-      this.setState(prevState => {
-        return {
-          images: [...prevState.images, ...hits],
-          totalImages: totalHits,
-        };
-      });
+
+      if (hits.length === 0) {
+        return toast.info('Sorry, image not found...', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+
+      // console.log(hits, totalHits);
+      this.setState(prevState => ({
+        images: [...prevState.images, ...hits],
+        loading: this.state.page < Math.ceil(totalHits / this.state.per_page),
+      }));
     } catch (error) {
       console.error('Error fetching data', error);
     } finally {
@@ -81,6 +90,7 @@ export class App extends Component {
     const btnLoadMore = !loading && images.length !== totalImages;
     return (
       <div className={css.App}>
+        <ToastContainer transition={Slide} />
         <SearchBar onSubmit={this.handleSubmitSearch} />
         {loading && <Loader />}
         <ImageGallery images={images} onModalOpen={this.onModalOpen} />
