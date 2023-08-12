@@ -9,9 +9,10 @@ const ImageGallery = ({ images, onModalOpen }) => {
       {images.length > 0 &&
         images.map(image => (
           <ImageGalleryItem
-            key={image.id} // Combine 'id' and 'index'
-            item={image}
-            onModalOpen={onModalOpen}
+            key={image.id}
+            imageUrl={image.webformatURL}
+            altText={image.tags}
+            onClick={() => onModalOpen(image.largeImageURL)}
           ></ImageGalleryItem>
         ))}
     </ul>

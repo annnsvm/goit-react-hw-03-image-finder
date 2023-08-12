@@ -2,14 +2,14 @@ import React from 'react';
 import css from './ImageGalerryItem.module.css';
 import PropTypes from 'prop-types';
 
-const ImageGalleryItem = ({ item, onModalOpen }) => {
+const ImageGalleryItem = ({ imageUrl, altText, onClick }) => {
   return (
-    <li key={item.id} className={css.ImageGalleryItem}>
+    <li className={css.ImageGalleryItem}>
       <img
         className={css.ImageGalleryItemImage}
-        src={item.webformatURL}
-        alt={item.tags}
-        onClick={() => onModalOpen(item.largeImageURL)}
+        src={imageUrl}
+        alt={altText}
+        onClick={onClick}
       />
     </li>
   );
@@ -22,7 +22,7 @@ ImageGalleryItem.propTypes = {
     tags: PropTypes.string.isRequired,
     largeImageURL: PropTypes.string.isRequired,
   }),
-  onModalOpen: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default ImageGalleryItem;

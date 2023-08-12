@@ -19,6 +19,10 @@ export class App extends Component {
     loading: false,
   };
 
+  componentDidMount() {
+    this.fetchImg();
+  }
+
   componentDidUpdate(_, prevState) {
     const { query, page } = this.state;
 
